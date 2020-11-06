@@ -1,0 +1,91 @@
+{% extends "Base.html" %}
+{% block title %}
+    我的图书馆
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item active">My Library</li>
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.reader') }}">Search</a></li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; margin-left:2%; margin-right: 2%; height: 700px">
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <thead>
+            <h6 style="margin-left:4% ">个人信息 <span class="badge badge-secondary">Self</span></h6>
+            <tr style="text-align: center">
+                <th scope="col" style="padding-bottom: 20px;color: dimgray">Id: {{ data.data.stu_id }}</th>
+                <th scope="col" style="padding-bottom: 20px;color: dimgray">用户名: {{ data.data.stu_name }}</th>
+                <th scope="col" style="padding-bottom: 20px;color: dimgray">专业: {{ data.data.stu_pro }}</th>
+                <th scope="col" style="padding-bottom: 20px;color: dimgray">性别: {{ data.data.stu_sex }}</th>
+                <th scope="col">
+                    <button type="button" class="btn btn-light" id="changeInfo">修改信息</button>
+                </th>
+                <th scope="col">
+                    <button type="button" class="btn btn-link" id="logout">退出</button>
+                </th>
+            </tr>
+            </thead>
+        </table>
+
+
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <thead>
+            <h6 style="margin-left:4% ">在借列表<span class="badge badge-secondary">Borrow</span></h6>
+            <tr style="text-align: center">
+                <th scope="col">书籍Id</th>
+                <th scope="col">借阅时间</th>
+                <th scope="col">预期归还时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if data2.code == 400 %}
+                <tr>
+                    <th scope="row" colspan="3" style="text-align: center; color: dimgray">暂无在借阅书籍信息</th>
+                </tr>
+            {% else %}
+                {% for data in data2.data %}
+                    <tr style="text-align: center;color: dimgray">
+                        <th scope="row">{{ data.book_id }}</th>
+                        <td>{{ data.borrow_date }}</td>
+                        <td>{{ data.expect_return_date }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <thead>
+            <h6 style="margin-left:4% ">历史借阅<span class="badge badge-secondary">History</span></h6>
+            <tr style="text-align: center">
+                <th scope="col">书籍Id</th>
+                <th scope="col">借阅时间</th>
+                <th scope="col">归还时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if data3.code == 401 %}
+                <tr>
+                    <th scope="row" colspan="3" style="text-align: center; color: dimgray">暂无已归还列表</th>
+                </tr>
+            {% else %}
+                {% for data in data3.data %}
+                    <tr style="text-align: center;color: dimgray">
+                        <th scope="row">{{ data.book_id }}</th>
+                        <td>{{ data.borrow_date }}</td>
+                        <td>{{ data.return_date }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/student.js') }}"></script>
+{% endblock %}

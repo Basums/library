@@ -1,0 +1,76 @@
+{% extends "Base.html" %}
+{% block title %}
+    图书查询
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.control') }}">My Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Search</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; margin-left:2%; margin-right: 2%; height: 700px">
+        <form class="form-inline" style="margin-left: 3%" method="post" id="searchBook">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="input_book_id" class="sr-only"></label>
+                <input type="text" class="form-control" id="input_book_id" placeholder="书籍序列" name="input_book_id">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="input_book_name" class="sr-only"></label>
+                <input type="text" class="form-control" id="input_book_name" placeholder="名称" name="input_book_name">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="input_book_author" class="sr-only"></label>
+                <input type="text" class="form-control" id="input_book_author" placeholder="作者"
+                       name="input_book_author">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" style="margin-left: 45px; width: 5%">
+                搜索
+            </button>
+            <button type="reset" class="btn btn-primary mb-2"
+                    style="background-color:white;margin-left: 25px; color: #303040; width: 5%">
+                重置
+            </button>
+        </form>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <thead>
+            <tr style="text-align: center">
+                <th scope="col">书籍序列</th>
+                <th scope="col">名称</th>
+                <th scope="col">作者</th>
+                <th scope="col">出版社</th>
+                <th scope="col">数量</th>
+                <th scope="col">分类</th>
+                <th scope="col">登记日期</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if data.code == 400 %}
+                <tr>
+                    <th scope="row" colspan="7" style="text-align: center; color: dimgray">暂无数据</th>
+                </tr>
+            {% else %}
+                {% for data in data.data %}
+                    <tr style="text-align: center;color: dimgray">
+                        <th scope="row">{{ data.book_id }}</th>
+                        <td>{{ data.book_name }}</td>
+                        <td>{{ data.book_author }}</td>
+                        <td>{{ data.book_pub }}</td>
+                        <td>{{ data.book_num }}</td>
+                        <td>{{ data.book_sort }}</td>
+                        <td>{{ data.book_record }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/reader.js') }}"></script>
+{% endblock %}

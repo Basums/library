@@ -1,0 +1,49 @@
+{% extends "Base.html" %}
+{% block title %}
+    管理员注册
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.ManagerControl') }}">Manager Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sign up</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; width: 40%; margin: 5% auto 0;">
+        <form method="post" id="checkManager">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputManagerPhone">Phone</label>
+                    <input type="number" class="form-control" id="inputManagerPhone" placeholder="手机号"
+                           name="inputManagerPhone">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputManagerCheck">Key</label>
+                    <input type="number" class="form-control" id="inputManagerCheck" placeholder="校验码"
+                           name="inputManagerCheck">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputManagerName">Name</label>
+                    <input type="text" class="form-control" id="inputManagerName" placeholder="用户名"
+                           name="inputManagerName">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputManagerPas">Password</label>
+                    <input type="password" class="form-control" id="inputManagerPas" placeholder="密码"
+                           name="inputManagerPas">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-info" style="float: right">注册</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/ManagerSignUp.js') }}"></script>
+{% endblock %}

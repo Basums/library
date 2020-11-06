@@ -1,0 +1,75 @@
+{% extends "Base.html" %}
+{% block title %}
+    学生信息修改
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.control') }}">My Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Info Change</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; width: 35%; margin: 8% auto 0;">
+        <form class="form-inline" method="post" id="inputNameForm">
+            <div class="form-group mb-2">
+                <label for="staticName" class="sr-only">Name</label>
+                <input type="text" readonly class="form-control-plaintext" id="staticName"
+                       value="用户名 : {{ data.data.stu_name }}">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="inputName" class="sr-only">新用户名</label>
+                <input type="text" class="form-control" id="inputName" placeholder="用户名" name="inputName">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">更改</button>
+        </form>
+
+
+        <form class="form-inline" method="post" id="inputProForm">
+            <div class="form-group mb-2">
+                <label for="staticPro" class="sr-only">Pro</label>
+                <input type="text" readonly class="form-control-plaintext" id="staticPro"
+                       value="专业 : {{ data.data.stu_pro }}">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="inputPro" class="sr-only">专业</label>
+                <input type="text" class="form-control" id="inputPro" placeholder="专业" name="inputPro">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">更改</button>
+        </form>
+
+        <form class="form-inline" method="post" id="inputSexForm">
+            <div class="form-group mb-2">
+                <label for="staticSex" class="sr-only">Sex</label>
+                <input type="text" readonly class="form-control-plaintext" id="staticSex"
+                       value="性别 : {{ data.data.stu_sex }}">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="inputSex" class="sr-only">性别</label>
+                <input type="text" class="form-control" id="inputSex" placeholder="性别(男/女)" name="inputSex">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">更改</button>
+        </form>
+
+        <form class="form-inline" method="post" id="inputPasswordForm">
+            <div class="form-group mb-2">
+                <label for="staticPass" class="sr-only">Password</label>
+                <input type="text" readonly class="form-control-plaintext" id="staticPass"
+                       value="新密码">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="inputPassword2" class="sr-only">Password</label>
+                <input type="password" class="form-control" id="inputPassword2" placeholder="Password"
+                       name="inputPassword2">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">更改</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/changeinfo.js') }}"></script>
+{% endblock %}

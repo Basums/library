@@ -1,0 +1,60 @@
+{% extends "Base.html" %}
+{% block title %}
+    学生注册
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.control') }}">My Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sign up</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; width: 40%; margin: 5% auto 0;">
+        <form method="post" id="checkMe">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputPhone">Phone</label>
+                    <input type="number" class="form-control" id="inputPhone" placeholder="手机号" name="inputPhone">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputCheck">check</label>
+                    <input type="number" class="form-control" id="inputCheck" placeholder="验证码" name="inputCheck">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-info" style="float: right" id="CheckBtn">获取验证码</button>
+        </form>
+        <br>
+        <br>
+        <form method="post" id="checkUs">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputStuName">Name</label>
+                    <input type="text" class="form-control" id="inputStuName" placeholder="用户名" name="inputStuName">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputStuPro">Pro</label>
+                    <input type="text" class="form-control" id="inputStuPro" placeholder="专业" name="inputStuPro">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputStuSex">Sex</label>
+                    <input type="text" class="form-control" id="inputStuSex" placeholder="性别(男/女)" name="inputStuSex">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputStuPas">Password</label>
+                    <input type="password" class="form-control" id="inputStuPas" placeholder="密码" name="inputStuPas">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-info" style="float: right">注册</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/signUp.js') }}"></script>
+{% endblock %}

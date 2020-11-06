@@ -1,0 +1,58 @@
+{% extends "Base.html" %}
+{% block title %}
+    入库
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.ManagerControl') }}">Manager Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">BookInRedirect</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; width: 30%; margin: 8% auto 0;">
+        <form class="form-inline" style="margin-left: 8%" method="post" id="BookInput">
+            <div class="form-group mb-2">
+                <label for="InputBookId">图书ID: </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="number" class="form-control" id="InputBookId" name="InputBookId" style="margin-left: 50px">
+            </div>
+            <div class="form-group mb-2">
+                <label for="InputBookName">图书名称:</label>
+                <input type="text" class="form-control" id="InputBookName" name="InputBookName"
+                       style="margin-left: 50px">
+            </div>
+            <div class="form-group mb-2">
+                <label for="InputBookAuthor">作者:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" class="form-control" id="InputBookAuthor" name="InputBookAuthor"
+                       style="margin-left: 50px">
+            </div>
+            <div class="form-group mb-2">
+                <label for="InputBookPub">出版社:</label>&nbsp;&nbsp;&nbsp;
+                <input type="text" class="form-control" id="InputBookPub" name="InputBookPub" style="margin-left: 50px">
+            </div>
+            <div class="form-group mb-2">
+                <label for="InputBookNum">数量:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="number" class="form-control" id="InputBookNum" name="InputBookNum"
+                       style="margin-left: 50px">
+            </div>
+            <div class="form-group mb-2">
+                <label for="InputBookSort">分类:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" class="form-control" id="InputBookSort" name="InputBookSort"
+                       style="margin-left: 50px">
+            </div>
+            <button type="submit" class="btn btn-outline-info" style="margin-top: 5%;margin-left: 70%">入库</button>
+        </form>
+        {% if data.code == 405 %}
+            <td><p style="color: red;margin-left: 5%">{{ data.msg }}</p></td>
+        {% elif data.code == 203 %}
+            <td><p style="color: green; margin-left: 5%">{{ data.msg }}</p></td>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/BookInput4.js') }}"></script>
+{% endblock %}

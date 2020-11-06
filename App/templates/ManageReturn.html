@@ -1,0 +1,96 @@
+{% extends "Base.html" %}
+{% block title %}
+    图书归还
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.ManagerControl') }}">Manager Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Return</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; margin-left:2%; margin-right: 2%; height: 700px">
+        <form class="form-inline" style="margin-left: 3%" method="post" id="returnBook">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="input_book_id4" class="sr-only"></label>
+                <input type="text" class="form-control" id="input_book_id4" placeholder="书籍序列" name="input_book_id4">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" style="margin-left: 45px; width: 5%">
+                搜索
+            </button>
+            <button type="reset" class="btn btn-primary mb-2"
+                    style="background-color:white;margin-left: 25px; color: #303040; width: 5%">
+                重置
+            </button>
+        </form>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            {% if data.code == 400 %}
+                <tr>
+                    <th scope="row" colspan="7" style="text-align: center; color: dimgray">暂无数据</th>
+                </tr>
+            {% else %}
+                <thead>
+                <tr style="text-align: center">
+                    <th scope="col">书籍序列</th>
+                    <th scope="col">名称</th>
+                    <th scope="col">作者</th>
+                    <th scope="col">出版社</th>
+                    <th scope="col">数量</th>
+                    <th scope="col">分类</th>
+                    <th scope="col">登记日期</th>
+                </tr>
+                </thead>
+                {% for data in data.data %}
+                    <tr style="text-align: center;color: dimgray;">
+                        <th scope="row">{{ data.book_id }}</th>
+                        <td>{{ data.book_name }}</td>
+                        <td>{{ data.book_author }}</td>
+                        <td>{{ data.book_pub }}</td>
+                        <td>{{ data.book_num }}</td>
+                        <td>{{ data.book_sort }}</td>
+                        <td>{{ data.book_record }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <h6 style="margin-left:4% ">当前借阅列表 <span class="badge badge-secondary">Borrow</span></h6>
+            {% if data2.code == 409 %}
+                <tr>
+                    <th scope="row" colspan="7" style="text-align: center; color: dimgray">暂无借阅</th>
+                </tr>
+            {% else %}
+                <thead>
+                <tr style="text-align: center">
+                    <th scope="col">借书用户</th>
+                    <th scope="col">当前借阅时间</th>
+                    <th scope="col">预期归还时间</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                {% for data in data2.data %}
+                    <tr style="text-align: center;color: dimgray;">
+                        <th scope="row">{{ data.student_id }}</th>
+                        <td>{{ data.borrow_date }}</td>
+                        <td>{{ data.expect_return_date }}</td>
+                        <td>
+                            <button type="button" class="btn btn-link"
+                                    onclick="window.location.href ='/2020/10/24/basums/manager/returnRedirect/basums2020vino/?book_id='
+                                            + {{ data.book_id }}+'&student_id='+{{ data.student_id }};">
+                                确认归还
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/return.js') }}"></script>
+{% endblock %}

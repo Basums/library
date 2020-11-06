@@ -1,0 +1,40 @@
+{% extends "Base.html" %}
+{% block title %}
+    学生登录
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.control') }}">My Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Student Login</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; width: 25%; margin: 8% auto 0;">
+        <form method="post" id="StudentForm">
+            <div class="form-group">
+                <label for="InputId">Id</label>
+                <input type="number" class="form-control" id="InputId" name="InputId">
+                <small id="idHelp" class="form-text text-muted">Id 是您唯一的登录识别码</small>
+            </div>
+            <div class="form-group">
+                <label for="InputPassword">Password</label>
+                <input type="password" class="form-control" id="InputPassword" name="InputPassword">
+            </div>
+            <button type="submit" class="btn btn-primary">login</button>
+            <button type="button" class="btn btn-link" style="margin-left: 50%">
+                <a href="{{ url_for('blue.signUp') }}">Sign up</a>
+            </button>
+        </form>
+        {% if data.code == 400 %}
+            <td><p style="color: red">{{ data.msg }}</p></td>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/Slogin.js') }}"></script>
+{% endblock %}

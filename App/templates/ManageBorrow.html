@@ -1,0 +1,148 @@
+{% extends "Base.html" %}
+{% block title %}
+    图书借阅
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.ManagerControl') }}">Manager Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Borrow</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; margin-left:2%; margin-right: 2%; height: 700px">
+        <form class="form-inline" style="margin-left: 3%" method="post" id="borrowBook">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="input_book_id2" class="sr-only"></label>
+                <input type="text" class="form-control" id="input_book_id2" placeholder="书籍序列" name="input_book_id2">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" style="margin-left: 45px; width: 5%">
+                搜索
+            </button>
+            <button type="reset" class="btn btn-primary mb-2"
+                    style="background-color:white;margin-left: 25px; color: #303040; width: 5%">
+                重置
+            </button>
+        </form>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <tbody>
+            {% if data.code == 400 %}
+                <tr>
+                    <th scope="row" colspan="7" style="text-align: center; color: dimgray">暂无数据</th>
+                </tr>
+            {% else %}
+                <thead>
+                <tr style="text-align: center">
+                    <th scope="col">书籍序列</th>
+                    <th scope="col">名称</th>
+                    <th scope="col">作者</th>
+                    <th scope="col">出版社</th>
+                    <th scope="col">数量</th>
+                    <th scope="col">分类</th>
+                    <th scope="col">登记日期</th>
+                </tr>
+                </thead>
+                {% for data in data.data %}
+                    <tr style="text-align: center;color: dimgray;">
+                        <th scope="row">{{ data.book_id }}</th>
+                        <td>{{ data.book_name }}</td>
+                        <td>{{ data.book_author }}</td>
+                        <td>{{ data.book_pub }}</td>
+                        <td>{{ data.book_num }}</td>
+                        <td>{{ data.book_sort }}</td>
+                        <td>{{ data.book_record }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <tbody>
+            <tr style="text-align: center">
+                <th scope="col">本书籍在架数量</th>
+                {% if data2.code == 409 %}
+                    {% if data.code == 400 %}
+                        <th scope="col">0</th>
+                        <th scope="col">
+                            <button type="button" class="btn btn-link" style="padding-top: 0px" disabled>不可借阅
+                            </button>
+                        </th>
+                    {% else %}
+                        {% if data.data|length !=0 %}
+                            <th scope="col">{{ data.data[0].book_num }}</th>
+                            {% if  (data.data[0].book_num) !=0 %}
+                                <th scope="col">
+                                    <button type="button" class="btn btn-link" id="ManagerBorrow"
+                                            style="padding-top: 0px"
+                                            value="{{ data.data[0].book_id }}">
+                                        可借阅
+                                    </button>
+                                </th>
+                            {% else %}
+                                <th scope="col">
+                                    <button type="button" class="btn btn-link" style="padding-top: 0px" disabled>不可借阅
+                                    </button>
+                                </th>
+                            {% endif %}
+                        {% else %}
+                            <th scope="col">0</th>
+                            <th scope="col">
+                                <button type="button" class="btn btn-link" style="padding-top: 0px" disabled>不可借阅
+                                </button>
+                            </th>
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    <th scope="col">{{ data.data[0].book_num -data2.data|length }}</th>
+                    {% if  (data.data[0].book_num -data2.data|length) !=0 %}
+                        <th scope="col">
+                            <button type="button" class="btn btn-link" id="ManagerBorrow" style="padding-top: 0px"
+                                    value="{{ data.data[0].book_id }}">可借阅
+                            </button>
+                        </th>
+                    {% else %}
+                        <th scope="col">
+                            <button type="button" class="btn btn-link" style="padding-top: 0px" disabled>不可借阅
+                            </button>
+                        </th>
+                    {% endif %}
+                {% endif %}
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            <thead>
+            <h6 style="margin-left:4% ">当前借阅列表 <span class="badge badge-secondary">Borrow</span></h6>
+            <tbody>
+            {% if data2.code == 409 %}
+                <tr>
+                    <th scope="row" colspan="7" style="text-align: center; color: dimgray">暂无借阅</th>
+                </tr>
+            {% else %}
+                <thead>
+                <tr style="text-align: center">
+                    <th scope="col">借书用户</th>
+                    <th scope="col">当前借阅时间</th>
+                    <th scope="col">预期归还时间</th>
+                </tr>
+                </thead>
+                {% for data in data2.data %}
+                    <tr style="text-align: center;color: dimgray;">
+                        <th scope="row">{{ data.student_id }}</th>
+                        <td>{{ data.borrow_date }}</td>
+                        <td>{{ data.expect_return_date }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+            </thead>
+        </table>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/borrow.js') }}"></script>
+{% endblock %}

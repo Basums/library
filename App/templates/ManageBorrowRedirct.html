@@ -1,0 +1,38 @@
+{% extends "Base.html" %}
+{% block title %}
+    借阅重定向
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.ManagerControl') }}">Manager Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ManagerBorrowRedirect</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; width: 25%; margin: 8% auto 0;">
+        <div class="form-group">
+            <label id="idHelp2">当前借阅书籍序号:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong
+                    style="color: darkcyan"
+                    id="InputBookId">{{ book }}</strong></label>
+        </div>
+
+        <form class="form-inline" id="ManagerBorrowRedirectForm" method="post">
+            <div class="form-group mb-2">
+                <label for="InputManagerPassword">借书用户ID:</label>
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="InputStudentID" class="sr-only">StudentID</label>
+                <input type="number" class="form-control" id="InputStudentID" name="InputStudentID">
+            </div>
+            <button type="submit" class="btn btn-outline-info" style="margin-top: 5%;margin-left: 50%">确认借阅</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/ManagerBorrowRedirect.js') }}"></script>
+{% endblock %}

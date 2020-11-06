@@ -1,0 +1,84 @@
+{% extends "Base.html" %}
+{% block title %}
+    图书检索
+{% endblock %}
+
+{% block wrapper %}
+    <nav aria-label="breadcrumb" style="background-color: #303040">
+        <ol class="breadcrumb" style="background-color: #303040">
+            <li class="breadcrumb-item"><a href="{{ url_for('blue.ManagerControl') }}">Manager Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">InOut</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron" style="background-color: #ffffff; margin-left:2%; margin-right: 2%; height: 700px">
+        <form class="form-inline" style="margin-left: 3%" method="post" id="returnBook">
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="input_book_id4" class="sr-only"></label>
+                <input type="text" class="form-control" id="input_book_id4" placeholder="书籍序列" name="input_book_id4">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" style="margin-left: 45px; width: 5%">
+                搜索
+            </button>
+            <button type="reset" class="btn btn-primary mb-2"
+                    style="background-color:white;margin-left: 25px; color: #303040; width: 5%">
+                重置
+            </button>
+            <button type="button" class="btn  btn-outline-info mb-2"
+                    style="background-color:white;margin-left: 55%; color: #303040; width: 5%"
+                    onclick=" window.location.href = '/2020/10/24/basums/manager/InRedirect/basums2020vino/';">
+                入库
+            </button>
+        </form>
+        <table class="table table-bordered" style="margin-left:4%; width: 90%; margin-top: 2%">
+            {% if data.code == 400 %}
+                <tr>
+                    <th scope="row" colspan="7" style="text-align: center; color: dimgray">暂无数据</th>
+                </tr>
+            {% else %}
+                <thead>
+                <tr style="text-align: center">
+                    <th scope="col">书籍序列</th>
+                    <th scope="col">名称</th>
+                    <th scope="col">作者</th>
+                    <th scope="col">出版社</th>
+                    <th scope="col">数量</th>
+                    <th scope="col">分类</th>
+                    <th scope="col">登记日期</th>
+                    <th scope="col">Process</th>
+                </tr>
+                </thead>
+                {% for data in data.data %}
+                    <tr style="text-align: center;color: dimgray;">
+                        <th scope="row" id="BookId">{{ data.book_id }}</th>
+                        <td><input type="text" class="form-control" id="inputBookName" value="{{ data.book_name }}"
+                                   style="width: 100px">
+                        </td>
+                        <td><input type="text" class="form-control" id="inputBookAuthor" value="{{ data.book_author }}"
+                                   style="width: 100px">
+                        </td>
+                        <td><input type="text" class="form-control" id="inputBookPub" value="{{ data.book_pub }}"
+                                   style="width: 100px"></td>
+                        <td><input type="text" class="form-control" id="inputBookNum" value="{{ data.book_num }}"
+                                   style="width: 100px"></td>
+                        <td><input type="text" class="form-control" id="inputBookSort" value="{{ data.book_sort }}"
+                                   style="width: 100px">
+                        </td>
+                        <td>{{ data.book_record }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary" id="changeBook">修改</button>
+                                <button type="button" class="btn btn-secondary" id="deleteBook">删除</button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </div>
+{% endblock %}
+{% block ext_js %}
+    <script type="text/javascript" src="{{ url_for("static", filename='js/BookInOut12.js') }}"></script>
+{% endblock %}
